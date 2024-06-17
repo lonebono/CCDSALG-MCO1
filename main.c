@@ -1,27 +1,31 @@
 typedef char string[SIZE]; //just for strings in general
 
-char top (string s)
+void top(string s, string result) 
 {
-    
     int lastSpaceIndex = -1;
     int i;
-    string top;
-    
-    if(strlen(s) == 0)
+
+    if (strlen(s) == 0) 
     {
-        return '\0';
-    }
+        result[0] = '\0';
+    } 
     else
     {
-        for (i = 0; i < strlen(s); i++)
+        for (i = 0; i < strlen(s); i++) 
         {
-                if (s[i] == ' ')
-                {
-                    lastSpaceIndex = i;
-                }
+            if (s[i] == ' ') 
+            {
+                lastSpaceIndex = i;
+            }
         }
-        
-        return s[lastSpaceIndex + 1];
+        if (lastSpaceIndex == -1) 
+        {
+            strcpy(result, s);
+        } 
+        else
+        {
+            strcpy(result, &s[lastSpaceIndex + 1]);
+        }
     }
 }
 
@@ -35,7 +39,7 @@ void push(string s, string element)
     {
         if (strlen(s) == 0)
         {
-            s[strlen(s)] = *element;
+            strcpy(s, element);
         }
         else
         {
@@ -45,129 +49,104 @@ void push(string s, string element)
     }
 }
 
-char pop(string s) 
+void pop(string s, string result)
 {
-    string popped;
-    int i, lastSpaceIndex = -1;
+    int i;
+    int lastSpaceIndex = -1;
+    string temp;
 
     if (strlen(s) == 0) 
     {
         printf("\nUnderflow Error!");
-        return top(s);
     } 
     else
     {
         for (i = 0; i < strlen(s); i++) 
         {
-            if (s[i] == ' ') 
+            if (s[i] == ' ')
             {
                 lastSpaceIndex = i;
             }
         }
-
-        if (lastSpaceIndex != -1) 
+        if (lastSpaceIndex != -1)
         {
-            strcpy(popped, &s[lastSpaceIndex + 1]);
+            top(s, temp);
+            strcpy(result, temp);
             s[lastSpaceIndex] = '\0';
         } 
         else
         {
-            strcpy(popped, s);
+            top(s, temp);
+            strcpy(result, temp);
             s[0] = '\0';
         }
-
-        return *popped;
     }
 }
 
-
-char queueHead (string s)
+void queueHead(string s, string result)
 {
-    
-    if(strlen(s) == 0)
-    {
-        return '\0';
-    }
-    else
-    {
-        return s[0];
-    }
-}
-
-char enqueue(string s, string element)
-{
+    int firstSpaceIndex = -1;
+    int i;
 
     if (strlen(s) == 0)
     {
-        s[strlen(s)] = *element;
+        result[0] = '\0';
+    }
+    else
+    {
+        for (i = 0; i < strlen(s); i++)
+        {
+            if (s[i] == ' ')
+            {
+                firstSpaceIndex = i;
+            }
+        }
+        if (firstSpaceIndex == -1)
+        {
+            strcpy(result, s);
+        }
+        else
+        {
+            while(s[i] != ' ')
+            {
+                result[i] = s[i];
+            }
+        }
+    }
+}
+
+
+void enqueue(string s, string element)
+{
+    if (strlen(s) == 0)
+    {
+        strcpy(s, element);
     }
     else
     {
         s[strlen(s)] = ' ';
         strcat(s, element);
     }
-
 }
 
-char dequeue(string s) 
+void dequeue(string s, string result)
 {
     string dequeued;
     int i, ctr = 0;
+    int deleted;
 
-    if (queueHead(s) == '\0') 
+    queueHead(s, dequeued);
+    
+    if (dequeued[0] == '\0')
     {
         printf("\nUnderflow Error!");
-        return queueHead(s);
-    } 
-    else if (queueHead(s) == '&' || queueHead(s) == '|' || s[1] == '=')
-    {
-        strcpy(dequeued, s);
-        if (queueHead(s) == '&') 
-        {
-            strcpy(dequeued, "&&");
-        } 
-        else if (queueHead(s) == '|')
-        {
-            strcpy(dequeued, "||");
-        } 
-        else if (s[1] == '=')
-        {
-            if (queueHead(s) == '>')
-            {
-                strcpy(dequeued, ">=");
-            }
-            if (queueHead(s) == '<')
-            {
-                strcpy(dequeued, "<=");
-            }
-            if (queueHead(s) == '=')
-            {
-                strcpy(dequeued, "==");
-            }
-            if (queueHead(s) == '!')
-            {
-                strcpy(dequeued, "!=");
-            }
-        }
-
-        while (ctr != 3) 
-        {
-            for (i = 0; i < strlen(s); i++)
-            {
-                s[i] = s[i + 1];
-            }
-            ctr++;
-        }
-
-        s[strlen(s) - 1] = '\0';
-
-        return *dequeued;
-    } 
+    }
     else
     {
-        strcpy(dequeued, s);
-
-        while (ctr != 2) 
+        strcpy(result, dequeued);
+        deleted = strlen(result);
+        
+        while (ctr != deleted)
         {
             for (i = 0; i < strlen(s); i++)
             {
@@ -175,9 +154,6 @@ char dequeue(string s)
             }
             ctr++;
         }
-
         s[strlen(s) - 1] = '\0';
-
-        return *dequeued;
     }
 }
