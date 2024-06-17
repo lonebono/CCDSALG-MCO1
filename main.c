@@ -1,3 +1,5 @@
+
+#define SIZE 256
 typedef char string[SIZE]; //just for strings in general
 
 void top(string s, string result) 
