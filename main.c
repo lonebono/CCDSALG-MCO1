@@ -27,8 +27,6 @@ char top (string s)
 
 void push(string s, string element)
 {
-    int x;
-
     if (strlen(s) == SIZE -1)
     {
         printf("\nOverflow Error!");
@@ -94,6 +92,21 @@ char queueHead (string s)
     {
         return s[0];
     }
+}
+
+char enqueue(string s, string element)
+{
+
+    if (strlen(s) == 0)
+    {
+        s[strlen(s)] = *element;
+    }
+    else
+    {
+        s[strlen(s)] = ' ';
+        strcat(s, element);
+    }
+
 }
 
 char dequeue(string s) 
