@@ -257,19 +257,22 @@ void queuedPostfix(queueArray *array, string postfix, int *numElem)
                 j++;
                 k++;
             }
-            (*array)[i].queue[j] = '\0';
+            (*array)[i].queue[j] = '\0'; 
             i++;
             j = 0;
         }
         else
         {
+            (*array)[i].queue[0] = ' ';
+            (*array)[i].queue[1] = '\0';
+            i++;
             k++;
         }
     }
-    *numElem = i;
+    *numElem = i; // Update the number of elements
 }
 
-void printQueued(queueArray *array, int numElem) //for testing
+void printQueued(queueArray *array, int numElem)
 {
     int i;
     for (i = 0; i < numElem; i++)
