@@ -39,22 +39,45 @@ void charToStr(char c, string *result){
     strncat(*result, &c, 1);
 }
 
-int precedence(string op) {
+int icp(string op) {
     if (strcmp(op, "^") == 0)
-        return 8;
+        return 9;
     else if (strcmp(op, "/") == 0 || strcmp(op, "*") == 0)
-        return 7;
+        return 8;
     else if (strcmp(op, "+") == 0 || strcmp(op, "-") == 0)
+        return 7;
+    else if (strcmp(op, ">") == 0 || strcmp(op, "<") == 0)
         return 6;
-    else if (strcmp(op, ">") == 0 || strcmp(op, "<") == 0 || strcmp(op, ">=") == 0 || strcmp(op, "<=") == 0)
-        return 5;
     else if (strcmp(op, "==") == 0 || strcmp(op, "!=") == 0)
-        return 4;
+        return 5;
     else if (strcmp(op, "!") == 0)
-        return 3;
+        return 4;
     else if (strcmp(op, "&&") == 0)
-        return 2;
+        return 3;
     else if (strcmp(op, "||") == 0)
+        return 2;
+    else
+        return 0;
+}
+
+int isp(string op) {
+    if (strcmp(op, "^") == 0)
+        return 9;
+    else if (strcmp(op, "/") == 0 || strcmp(op, "*") == 0)
+        return 8;
+    else if (strcmp(op, "+") == 0 || strcmp(op, "-") == 0)
+        return 7;
+    else if (strcmp(op, ">") == 0 || strcmp(op, "<") == 0 || strcmp(op, ">=") == 0 || strcmp(op, "<=") == 0)
+        return 6;
+    else if (strcmp(op, "==") == 0 || strcmp(op, "!=") == 0)
+        return 5;
+    else if (strcmp(op, "!") == 0)
+        return 4;
+    else if (strcmp(op, "&&") == 0)
+        return 3;
+    else if (strcmp(op, "||") == 0)
+        return 2;
+    else if (strcmp(op, "(") == 0)
         return 1;
     else
         return 0;
@@ -103,7 +126,7 @@ void push(string s, string element)
         }
         else
         {
-            s[strlen(s)] = ' ';
+            strcat(s, " ");
             strcat(s, element);
         }
     }
@@ -172,7 +195,7 @@ void infix_to_postfix(string infix, string *postfix){
             else if (c == ')') {
                 top(stackOperators, topOperator);
                 
-                while (precedence(topOperator) != 0 && strlen(stackOperators) != 0) {
+                while (icp(topOperator) != 0 && strlen(stackOperators) != 0) {
                     enqueue(postfix, topOperator);
                     pop(stackOperators, x);
                     top(stackOperators, topOperator);
@@ -181,15 +204,16 @@ void infix_to_postfix(string infix, string *postfix){
             }
             else {
                 strcat(operand, temp);
-                
+                //printf(">%s\n", operand);
+
                 if (isdigit(infix[i+1]) || infix[i+1] == '(' || infix[i+1] == ')') {
                     top(stackOperators, topOperator);
-                    if (precedence(operand) > precedence(topOperator)) {
+                    if (icp(operand) > isp(topOperator)) {
                         push(stackOperators, operand);
                     }
                     else {
                         top(stackOperators, topOperator);
-                        while ((precedence(operand) <= precedence(topOperator)) && (strlen(stackOperators) != 0)) {
+                        while ((icp(operand) <= isp(topOperator)) && (strlen(stackOperators) != 0)) {
                             enqueue(postfix, topOperator);
                             pop(stackOperators, x);
                             top(stackOperators, topOperator);
@@ -200,7 +224,6 @@ void infix_to_postfix(string infix, string *postfix){
                 }
             }
         }
-        printf(">%s\n", stackOperators);
     }
     while (strlen(stackOperators) != 0) {
         pop(stackOperators, x);
@@ -210,15 +233,23 @@ void infix_to_postfix(string infix, string *postfix){
 
 
 int main() {
-     string infix;
-     string postfix;
+     
+    string infix;
+    string postfix;
 
-     printf("Enter an infix expression: ");
-     scanf("%s", infix);
+    while (strcmp(infix, "QUIT") != 0) {
+        printf("Enter an infix expression: ");
 
-     infix_to_postfix(infix, &postfix);
-
-     printf("Postfix expression: %s\n", postfix);
+        scanf("%s", infix);
+        
+        infix_to_postfix(infix, &postfix);
+        
+        printf("Postfix expression: %s\n", postfix);
+        printf("Evaluated Value: \n");
+        printf("\n");
+        
+        strcpy(postfix, "");
+    }
     
     return 0;
 }
