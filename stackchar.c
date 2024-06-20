@@ -8,24 +8,24 @@ void top(string s, string result)
     int lastSpaceIndex = -1;
     int i;
 
-    if (strlen(s) == 0)
+    if (strlen(s) == 0) //if stack is empty, return null byte
     {
         result[0] = '\0';
     }
     else
     {
-        for (i = 0; i < strlen(s); i++)
+        for (i = 0; i < strlen(s); i++) //find the last ' '/space in the string
         {
             if (s[i] == ' ')
             {
                 lastSpaceIndex = i;
             }
         }
-        if (lastSpaceIndex == -1)
+        if (lastSpaceIndex == -1) //if only one element is in the stack
         {
             strcpy(result, s);
         }
-        else
+        else //copy the element after the last space, in other words the last element in the string
         {
             strcpy(result, &s[lastSpaceIndex + 1]);
         }
@@ -34,17 +34,17 @@ void top(string s, string result)
 
 void push(string s, string element)
 {
-    if (strlen(s) == SIZE -1)
+    if (strlen(s) == SIZE -1) //if stack is full
     {
         printf("\nOverflow Error!");
     }
     else
     {
-        if (strlen(s) == 0)
+        if (strlen(s) == 0) //if stack is empty, simply copy the element
         {
             strcpy(s, element);
         }
-        else
+        else //if stack is not empty, put ' '/space first then copy the element
         {
             strcat(s, " ");
             strcat(s, element);
@@ -58,26 +58,26 @@ void pop(string s, string result)
     int lastSpaceIndex = -1;
     string temp;
 
-    if (strlen(s) == 0)
+    if (strlen(s) == 0) //if stack is empty
     {
         printf("\nUnderflow Error!");
     }
     else
     {
-        for (i = 0; i < strlen(s); i++)
+        for (i = 0; i < strlen(s); i++) //find the last ' '/space in the string
         {
             if (s[i] == ' ')
             {
                 lastSpaceIndex = i;
             }
         }
-        if (lastSpaceIndex != -1)
+        if (lastSpaceIndex != -1) //if there is more than one element in the stack, copy the top element and replace the last space with null byte
         {
             top(s, temp);
             strcpy(result, temp);
             s[lastSpaceIndex] = '\0';
         }
-        else
+        else //if there is only one element in the stack, copy the top element and replace the first index with null byte
         {
             top(s, temp);
             strcpy(result, temp);
@@ -86,6 +86,7 @@ void pop(string s, string result)
     }
 }
 
+//
 void createStack(Stack *s){
     s->top = -1;
 }
