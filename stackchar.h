@@ -3,7 +3,7 @@ typedef struct {
     char top;
 } Stack;
 
-//for infix-postfix for conversion
+//for infix to postfix for conversion
 void top(string s, string result)
 void push(string s, string element)
 void pop(string s, string result)
