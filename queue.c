@@ -3,6 +3,32 @@
 #include <string.h>
 #include "queue.h"
 
+//For infix-postfix conversion
+void enqueue(string *s, string element)
+{
+    if (strlen(*s) == 0)
+    {
+        strcpy(*s, element);
+    }
+    else
+    {
+        strcat(*s, " ");
+        strcat(*s, element);
+    }
+}
+
+char queueHead(string s)
+{
+    if (strlen(s) == 0)
+    {
+        return '\0';
+    }
+    else
+    {
+        return s[0];
+    }
+}
+
 // implement the queue code algorithm 
 
 void endsOfQueue(Queue *q) {
