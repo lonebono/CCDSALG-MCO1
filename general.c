@@ -149,9 +149,6 @@ void postfix_to_queue(queueArray *array, string postfix, int *numElem)
         }
         else
         {
-            (*array)[i].queue[0] = ' ';
-            (*array)[i].queue[1] = '\0'; // Null-terminate the string
-            i++;
             k++;
         }
     }
