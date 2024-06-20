@@ -1,15 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define MAX_CHAR 256 //255 characters
+#include "queue.h"
 
 // implement the queue code algorithm 
-
-typedef struct Queue {
-    char *eval[MAX_CHAR];
-    int front, rear;
-} Queue;
 
 void endsOfQueue(Queue *q) {
     q->front = -1;
@@ -44,8 +38,8 @@ void enqueue(Queue *q, int value) {
     }
 }
 
-void dequeue(Queue *q) {
-    int value;
+char dequeue(Queue *q) {
+    char value; //returns a char
     if (isQueueEmpty == 0){
         printf("Queue is Empty!\n");
         return -1;
