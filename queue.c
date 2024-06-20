@@ -10,7 +10,7 @@ void enqueue(string *s, string element)
     {
         strcpy(*s, element);
     }
-    else //if queue is not empty, put space first then copy the element
+    else //if queue is not empty, put ' '/space first then copy the element
     {
         strcat(*s, " ");
         strcat(*s, element);
