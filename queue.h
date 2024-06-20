@@ -1,3 +1,8 @@
+typedef struct {
+    string queue;
+    char front, rear;
+} Queue;
+
 //For infix to postfix conversion
 void enqueue(string *s, string element)
 char queueHead(string s)
