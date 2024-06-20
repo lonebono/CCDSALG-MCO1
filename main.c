@@ -17,6 +17,7 @@ int main(void)
     while (strcmp(infix, "QUIT") != 0) {
         
         scanf("%s", infix);
+        printf("%s\n", infix);
         
         infix_to_postfix(infix, &postfix);
         
@@ -24,7 +25,7 @@ int main(void)
         
         queuedPostfix(&array, postfix, &numElem);
         
-        printf("Evaluated Value: \n"); //evaluated value
+        printf("(evaluated postfix here)\n"); //evaluated value
         printf("\n");
         
         strcpy(postfix, "");
