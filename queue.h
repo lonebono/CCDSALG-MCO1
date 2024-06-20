@@ -1,9 +1,7 @@
-#define MAX_CHAR 256 //255 characters
+//For infix to postfix conversion
+void enqueue(string *s, string element)
+char queueHead(string s)
 
-typedef struct Queue {
-    char *eval[MAX_CHAR];
-    int front, rear;
-} Queue;
 
 void endsOfQueue(Queue *q);
 void isQueueEmpty(Queue *q);
