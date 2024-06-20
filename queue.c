@@ -6,11 +6,11 @@
 //For infix-postfix conversion
 void enqueue(string *s, string element)
 {
-    if (strlen(*s) == 0)
+    if (strlen(*s) == 0) //if queue is empty, simply copy the element
     {
         strcpy(*s, element);
     }
-    else
+    else //if queue is not empty, put space first then copy the element
     {
         strcat(*s, " ");
         strcat(*s, element);
@@ -19,11 +19,11 @@ void enqueue(string *s, string element)
 
 char queueHead(string s)
 {
-    if (strlen(s) == 0)
+    if (strlen(s) == 0) //return null byte if queue is empty
     {
         return '\0';
     }
-    else
+    else  //return element in first index 
     {
         return s[0];
     }
