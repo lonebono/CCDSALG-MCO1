@@ -4,8 +4,21 @@
 #include <string.h>
 #include <math.h>
 
+
 #define SIZE 256
 typedef char string[SIZE]; //just for strings in general
+
+typedef struct {
+    char stackint[SIZE];
+    char top;
+} Stack;
+
+typedef struct {
+    string queue;
+    char front, rear;
+} Queue;
+
+typedef Queue queueArray[SIZE];
 
 void enqueue(string *s, string element)
 {
@@ -231,6 +244,65 @@ void infix_to_postfix(string infix, string *postfix){
     }
 }
 
+void queuedPostfix(queueArray *array, string postfix, int *numElem)
+{
+    int i = 0, j = 0, k = 0;
+    while (k < strlen(postfix))
+    {
+        if (postfix[k] != ' ')
+        {
+            while (postfix[k] != ' ' && postfix[k] != '\0')
+            {
+                (*array)[i].queue[j] = postfix[k];
+                j++;
+                k++;
+            }
+            (*array)[i].queue[j] = '\0';
+            i++;
+            j = 0;
+        }
+        else
+        {
+            k++;
+        }
+    }
+    *numElem = i;
+}
+
+void printQueued(queueArray *array, int numElem) //for testing
+{
+    int i;
+    for (i = 0; i < numElem; i++)
+    {
+        printf("Token in index %d: %s \n", i, (*array)[i].queue);
+    }
+}
+
+int main(void)
+{
+    string infix;
+    string postfix;
+    queueArray array;
+    int numElem = 0;
+
+    while (1)
+    {
+        printf("Enter an infix expression (or QUIT to exit): ");
+        scanf("%s", infix);
+
+        if (strcmp(infix, "QUIT") == 0) break;
+
+        infix_to_postfix(infix, &postfix);
+        printf("Postfix expression: %s\n", postfix);
+
+        queuedPostfix(&array, postfix, &numElem);
+        printQueued(&array, numElem);
+
+        strcpy(postfix, "");
+    }
+
+    return 0;
+}
 
 int main() {
      
